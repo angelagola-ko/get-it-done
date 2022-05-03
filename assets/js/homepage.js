@@ -13,11 +13,20 @@ var getUserRepos = function(user) {
     //make a request to get url
 
     fetch(apiUrl).then(function(response){
-        response.json().then(function(data){
-            displayRepos(data,user);
-            //console.log(data);
+        //request was successful
+        if (response.ok) {
+            response.json().then(function(data) {
+                displayRepos(data,user);
+                //console.log(data);
         });
-    });
+        } else {
+            alert('Error: GitHub User Not Found');
+        }
+    })
+    .catch(function(error) {
+        //Notie this `.catch()` getting chained onto the end of the `.then()` method
+        alert("Unable to connect to Github");
+    })
     //fetch("https://api.github.com/users/octocat/repos").then(function(response) {
      //   response.json().then(function(data) {
 
