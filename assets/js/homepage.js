@@ -36,7 +36,7 @@ var getUserRepos = function(user) {
 console.log("outside");
 };
 
-var response = fetch("https://api.github.com/users/facebook/repos");
+var response = fetch("https://api.github.com/users/angelagola-ko/repos");
 console.log(response);
 
 var userFormE1 = document.querySelector("#user-form");
