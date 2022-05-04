@@ -1,5 +1,16 @@
 var issueContainerE1 = document.querySelector("#issues-container");
+var limitWarningE1 = document.querySelector("#limit-warning");
+var repoNameE1 = document.querySelector("#repo-name");
 
+ var getRepoName = function() {
+     //Splits off the repo name
+     var queryString = document.location.search;
+     var repoName = queryString.split("=")[1];
+     getRepoIssues(repoName);
+     repoNameE1.textContent = repoName;
+     //uses repo name to fethc related issues
+
+ }
 var getRepoIssues = function(repo) {
     console.log(repo);
     var apiUrl = "https://api.github.com/repos/" + repo + "/issues?direction=asc";
@@ -10,12 +21,20 @@ var getRepoIssues = function(repo) {
               //  console.log(data)
               //pass response data to dom function
               displayIssues(data);
+
+              // check if api has paginated issues
+              if (response.headers.get("Link")) {
+                 // console.log("repo has more than 30 issues");
+                 displayWarning(repo);
+              }
             });
         } else {
             alert("There was a problem with your request!");
         }
     });
+    
 };
+
 
 var displayIssues = function(issues) {
 
@@ -52,4 +71,17 @@ var displayIssues = function(issues) {
     }
 };
 
-getRepoIssues("angelagola-ko/code-quiz");
+var displayWarning = function(repo) {
+    //add text to warning container
+    limitWarningE1.textContent = "To see more than 30 issues, visit ";
+    var linkE1 = document.createElement("a");
+    linkE1.textContent = "See More Issues on GitHub.com";
+    linkE1.setAttribute("href", "https://github.com/" + repo + "/issues");
+    linkE1.setAttribute("target", "_blank");
+
+    // append to warning container
+    limitWarningE1.appendChild(linkE1)
+};
+
+//getRepoIssues("facebook/react");
+getRepoName();
