@@ -7,8 +7,6 @@ var repoNameE1 = document.querySelector("#repo-name");
      var queryString = document.location.search;
      var repoName = queryString.split("=")[1];
      //uses repo name to fethc related issues
-     getRepoIssues(repoName);
-     repoNameE1.textContent = repoName;
 
      if (repoName) {
          //display repo name on the page
